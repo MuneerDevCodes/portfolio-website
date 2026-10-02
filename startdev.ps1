@@ -1,1 +1,0 @@
-Start-Process -FilePath 'cmd.exe' -ArgumentList '/c','c:\Users\Muneer\Desktop\Master\portfolio-website\rundev.bat' -WorkingDirectory 'c:\Users\Muneer\Desktop\Master\portfolio-website' -WindowStyle Hidden
