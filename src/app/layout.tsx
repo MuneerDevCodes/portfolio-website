@@ -39,33 +39,9 @@ export const metadata: Metadata = {
   },
   icons: [
     {
-      rel: 'apple-touch-icon',
-      sizes: '120x120',
-      url: '/favicons/apple-touch-icon.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '512x512',
-      url: '/favicons/android-chrome-512x512.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '192x192',
-      url: '/favicons/android-chrome-192x192.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '32x32',
-      url: '/favicons/favicon-32x32.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '16x16',
-      url: '/favicons/favicon-16x16.png',
+      rel: 'touch-icon',
+      type: 'image/x-icon',
+      url: '/favicons/Faviocn96.ico',
     },
   ],
 };
