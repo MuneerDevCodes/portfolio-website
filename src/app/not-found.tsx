@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components';
-import { Layout } from '@/containers';
 import { DynamicShowLottie } from '@/components/dynamic/Dynamic';
+import { Layout } from '@/containers';
 
 const NotFound = () => {
   return (

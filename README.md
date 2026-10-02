@@ -6,7 +6,6 @@
 </p>
 
 <p align="center">
-  </a>
   <img src="https://img.shields.io/badge/Node-22.x-green" alt="Node 22" />
   <img src="https://img.shields.io/badge/Next.js-13.5-black" alt="Next.js 13" />
   <img src="https://img.shields.io/badge/TypeScript-4.8-blue" alt="TypeScript" />
@@ -14,7 +13,7 @@
 
 <br>
 
-[![My Portfolio])](https://muneerdevcodes.vercel.app/)
+**🔗 Live Demo:** [muneerdevcodes.vercel.app](https://muneerdevcodes.vercel.app/)
 
 ## Table of Contents
 
@@ -253,5 +252,8 @@ Remember, Good PR makes you a Good contributor!
 
 ## License
 
+© 2026 Muhammad Muneer. All rights reserved.
+
+This repository is proprietary and shared for viewing purposes only. No permission is granted to copy, modify, distribute, sublicense, or reuse any part of this project without prior written consent from the author.
 
 
