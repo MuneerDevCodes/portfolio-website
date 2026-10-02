@@ -12,7 +12,7 @@ const skills: Omit<SkillType, 'id'>[] = [
     points: [
       'Building full-stack web applications using the MERN stack (MongoDB, Express.js, React.js, Node.js)',
       'Developing role-based platforms with secure, JWT-authenticated REST APIs',
-      'Building server-rendered applications with PHP and Laravel following MVC architecture',
+      'Building server-rendered applications with Laravel following MVC architecture',
     ],
     softwareSkills: [
       // iconify icons: https://icon-sets.iconify.design/

@@ -15,7 +15,7 @@ const projects: Omit<ProjectType, 'id'>[] = [
     url: 'https://github.com/MuneerDevCodes',
     img: 'https://placehold.co/600x400/png?text=Covid+Booking+System',
     year: 2025,
-    tags: ['PHP', 'Laravel', 'MySQL'],
+    tags: [ 'Laravel', 'MySQL'],
   },
   {
     name: 'hotel management system',

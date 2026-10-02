@@ -18,7 +18,7 @@ export const author = {
 export const seoData = {
   title: 'Muhammad Muneer | Junior Web Developer',
   description:
-    'Muhammad Muneer is a Junior Web Developer specializing in the MERN stack and PHP Laravel, building secure, role-based web applications with React.js and JWT-authenticated APIs.',
+    'Muhammad Muneer is a Junior Web Developer specializing in the MERN stack and Laravel, building secure, role-based web applications with React.js and JWT-authenticated APIs.',
   author: author.name,
   image: '/me.png',
   url: 'https://muneerdevcodes.vercel.app/',

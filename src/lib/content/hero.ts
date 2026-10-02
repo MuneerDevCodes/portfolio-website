@@ -3,13 +3,13 @@ import { resumeFileName } from '@/lib/utils/config';
 
 export const heroSection: HeroSectionType = {
   subtitle: 'Hi, my name is',
-  title: 'muhammad muneer.',
-  tagline: 'I build secure, full-stack web applications.',
+  title: 'Muhammad Muneer.',
+  tagline: 'I build modern, responsive, and user-friendly web applications.',
   description:
-    "I'm a Junior Web Developer with hands-on experience across the MERN stack and PHP Laravel, building role-based platforms with secure, JWT-authenticated APIs.",
-  specialText: 'Currently open to new opportunities',
+    'Full-stack web developer experienced in MERN and Laravel, focused on creating clean and dependable digital experiences.',
+  specialText: 'Let’s build something great',
   cta: {
-    title: 'see my resume',
+    title: 'See My Resume',
     url: `/${resumeFileName}`,
     hideInDesktop: true,
   },

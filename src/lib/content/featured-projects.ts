@@ -21,7 +21,7 @@ const projects: Omit<FeaturedProjectType, 'id'>[] = [
       'Built a 3-role appointment system (Admin / Hospital / Patient) handling end-to-end patient flow, including booking requests, hospital approvals, test result updates, vaccination status tracking, and exportable date/week/month-wise reports.',
     url: 'https://github.com/MuneerDevCodes',
     img: 'https://placehold.co/720x480/png?text=Covid+Booking+System',
-    tags: ['PHP', 'Laravel', 'MySQL'],
+    tags: [ 'Laravel', 'MySQL'],
   },
   {
     name: 'Hotel Management System',
