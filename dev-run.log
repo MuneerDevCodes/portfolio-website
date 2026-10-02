@@ -1,0 +1,12 @@
+
+> dev
+> next dev
+
+ ⚠ Port 3000 is in use, trying 3001 instead.
+'yarn' is not recognized as an internal or external command,
+operable program or batch file.
+  ▲ Next.js 13.5.3
+  - Local:        http://localhost:3001
+  - Environments: .env
+
+ ✓ Ready in 8.5s
