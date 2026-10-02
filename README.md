@@ -83,7 +83,8 @@
   npm install
 ```
 
-> **Note** > `yarn.lock` is committed to this repo, so you can use `yarn` instead of `npm` if you prefer. Yarn is **not** bundled with Node.js — if `yarn` is not recognised, see [Troubleshooting](#troubleshooting).
+> **Note**
+> This project uses **npm**. `package-lock.json` is committed, so `npm install` reproduces the exact dependency tree.
 
 4. Set up your environment variables (optional)
 
@@ -119,7 +120,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 | `npm run prepare`      | Install the Husky Git hooks               |
 
 > **Note**
-> If you installed with npm, use `npm run <script>`. If you used yarn, use `yarn <script>`.
+> Every script is run with npm, e.g. `npm run <script>`.
 
 ## Customizing
 
@@ -177,17 +178,6 @@ To choose a port explicitly:
 
 ```bash
   npm run dev -- -p 3001
-```
-
-</details>
-
-<details>
-<summary><b>'yarn' is not recognized as an internal or external command</b></summary>
-
-Yarn no longer ships with Node.js. Either keep using npm (`npm install`, `npm run dev`), or enable Yarn via [Corepack](https://nodejs.org/api/corepack.html):
-
-```bash
-  corepack enable
 ```
 
 </details>
