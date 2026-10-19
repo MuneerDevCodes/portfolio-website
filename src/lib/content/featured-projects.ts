@@ -4,16 +4,6 @@ import { toId } from '@/lib/utils/helper';
 
 const projects: Omit<FeaturedProjectType, 'id'>[] = [
   {
-    name: 'EventSphere',
-    description:
-      'An expo management platform for organizers, exhibitors, and attendees.',
-    tasks:
-      'Architected a 3-role platform (Admin / Exhibitor / Attendee) with exhibitor application and approval workflow, dynamic booth allocation from an interactive floor plan, session scheduling with 5+ configurable time slots, and access control enforced at the API level rather than the UI alone.',
-    url: 'https://github.com/MuneerDevCodes',
-    img: 'https://placehold.co/720x480/png?text=EventSphere',
-    tags: ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'JWT'],
-  },
-  {
     name: 'Covid Test & Vaccination Booking System',
     description:
       'An appointment platform for booking COVID tests and vaccinations.',
