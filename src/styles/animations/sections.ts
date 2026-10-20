@@ -2,9 +2,9 @@ import { slideUp } from '.';
 import { Variants } from 'framer-motion';
 
 export const sectionVariants = slideUp({
-  delay: 0.5,
-  duration: 1.75,
-  offset: 50,
+  delay: 0.1,
+  duration: 0.5,
+  offset: 30,
 });
 
 export const getSectionAnimation = {
@@ -24,11 +24,9 @@ export const projectVariants: Variants = {
     y: 0,
     transition: {
       type: 'tween',
-
-      stiffness: 240,
-      damping: 20,
-      delay: 0.2 * i,
-      // duration: 0.5,
+      ease: 'easeOut',
+      duration: 0.5,
+      delay: 0.05 * i,
     },
   }),
 };

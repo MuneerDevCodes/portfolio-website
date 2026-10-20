@@ -17,32 +17,32 @@ const Wrapper = ({
   animate = true,
   ...rest
 }: Props & MotionProps) => {
+  const classes = `py-24 md:py-32 ${className}`;
+
+  // Use the static motion.section component instead of creating a new
+  // motion component type on every render (which remounts the subtree).
+  if (as === 'section') {
+    return (
+      <motion.section id={id} className={classes} {...rest}>
+        {children}
+      </motion.section>
+    );
+  }
+
   if (animate) {
     const MotionTag = motion(as);
 
     return (
-      <MotionTag id={id} className={`py-24 md:py-32 ${className}`} {...rest}>
+      <MotionTag id={id} className={classes} {...rest}>
         {children}
       </MotionTag>
-    );
-  }
-
-  if (as === 'section') {
-    return (
-      <motion.section
-        id={id}
-        className={`py-24 md:py-32 ${className}`}
-        {...rest}
-      >
-        {children}
-      </motion.section>
     );
   }
 
   const CustomTag = `${as}` as ElementType;
 
   return (
-    <CustomTag id={id} className={`py-24 md:py-32 ${className}`} {...rest}>
+    <CustomTag id={id} className={classes} {...rest}>
       {children}
     </CustomTag>
   );

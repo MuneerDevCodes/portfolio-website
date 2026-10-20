@@ -14,8 +14,9 @@ export const fadeIn = (delay = 0): Variants => ({
   show: {
     opacity: 1,
     transition: {
-      type: 'spring',
-      duration: 1.25,
+      type: 'tween',
+      ease: 'easeOut',
+      duration: 0.2,
       delay,
     },
   },
@@ -50,9 +51,9 @@ export const slideIn = ({
       x: 0,
       opacity: 1,
       transition: {
-        type: 'spring',
-        stiffness: 300,
-        damping: 20,
+        type: 'tween',
+        ease: 'easeOut',
+        duration: 0.35,
         delay,
       },
     },
@@ -62,7 +63,7 @@ export const slideIn = ({
 /**
  * Slide's component in up direction
  * @param {number} [object.delay=0] - The transition's delay
- * @param {number} [object.duration=1.25] - Duration of transition
+ * @param {number} [object.duration=0.4] - Duration of transition
  * @param {number} [object.offset=20] -  The offset from which components should slide in
  * @returns {Variants} Variants
  */
@@ -74,7 +75,7 @@ export const slideIn = ({
 
 export const slideUp = ({
   delay = 0,
-  duration = 1.25,
+  duration = 0.4,
   offset = 20,
 }: {
   delay?: number;
@@ -89,7 +90,8 @@ export const slideUp = ({
     opacity: 1,
     y: 0,
     transition: {
-      type: 'spring',
+      type: 'tween',
+      ease: 'easeOut',
       delay,
       duration,
     },
@@ -101,9 +103,9 @@ export const slideUp = ({
 // * For sections
 
 export const sectionVariants = slideUp({
-  delay: 0.5,
-  duration: 1.75,
-  offset: 50,
+  delay: 0.1,
+  duration: 0.5,
+  offset: 30,
 });
 
 export const getSectionAnimation = {
@@ -124,11 +126,10 @@ export const projectVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: 'spring',
-      stiffness: 150,
-      damping: 20,
-      delay: 0.2 * i,
-      // duration: 0.5,
+      type: 'tween',
+      ease: 'easeOut',
+      duration: 0.5,
+      delay: 0.05 * i,
     },
   }),
 };

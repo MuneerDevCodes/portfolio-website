@@ -13,7 +13,7 @@ type Props = {
 const Sidebar = ({ children, className = '', side = 'left' }: Props) => {
   return (
     <motion.div
-      variants={fadeIn(2.75)}
+      variants={fadeIn(0.2)}
       initial="hidden"
       animate="show"
       className={`fixed bottom-0 flex-col items-center hidden md:flex ${className} ${

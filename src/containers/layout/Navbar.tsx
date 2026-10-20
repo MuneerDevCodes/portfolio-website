@@ -77,7 +77,7 @@ const Navbar = () => {
 
   const windowWidth = useWindowWidth();
   const md = getBreakpointsWidth('md');
-  const ANIMATION_DELAY = windowWidth <= md ? 0 : 0.8;
+  const ANIMATION_DELAY = windowWidth <= md ? 0 : 0.1;
 
   useEffect(() => {
     hideNavWhileScrolling({ when: !navbarCollapsed });
@@ -85,7 +85,7 @@ const Navbar = () => {
 
   return (
     <motion.header
-      variants={fadeIn(0.5)}
+      variants={fadeIn(0.1)}
       initial="hidden"
       animate="show"
       id="navbar"
