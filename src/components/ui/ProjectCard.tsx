@@ -5,7 +5,7 @@ import { blurImageURL } from '@/lib/utils/config';
 import { Icon } from '@iconify/react';
 import { motion, MotionProps } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ProjectCard = ({
   name,
@@ -19,21 +19,10 @@ const ProjectCard = ({
 }: ProjectType & MotionProps) => {
   // To avoid hydration failed error
   const [domLoaded, setDomLoaded] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     setDomLoaded(true);
   }, []);
-
-  const playVideo = () => {
-    // play() returns a promise that can reject (e.g. if the user
-    // leaves before playback starts), so swallow the error
-    videoRef.current?.play().catch(() => {});
-  };
-
-  const pauseVideo = () => {
-    videoRef.current?.pause();
-  };
 
   return domLoaded ? (
     <motion.div {...rest} className="w-full max-w-[350px]">
@@ -43,22 +32,18 @@ const ProjectCard = ({
           if ((e.target as HTMLElement).closest('a')) return;
           window.open(url);
         }}
-        onMouseEnter={playVideo}
-        onMouseLeave={pauseVideo}
-        onFocus={playVideo}
-        onBlur={pauseVideo}
         className="block w-full overflow-hidden transition-all duration-200 rounded-md shadow-xl group bg-bg-secondary dark:shadow-2xl"
       >
         <div className="overflow-hidden h-[200px]">
           {video ? (
             <video
-              ref={videoRef}
               src={video}
               poster={img}
+              autoPlay
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="auto"
               className="object-cover w-full h-full transition-all duration-300 group-hover:scale-110 group-focus-visible:scale-110"
             />
           ) : (
