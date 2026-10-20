@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+const nextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
@@ -56,3 +56,19 @@ module.exports = {
     ],
   },
 };
+
+// `next dev` and `next build`/`next start` both write to the same `.next`
+// directory by default. Running a production build while a dev server is live
+// overwrites the dev server's compiled chunks with production artifacts, which
+// makes the dev server return 500s for every JS/CSS asset it serves.
+//
+// Pointing only the dev server at its own dist directory keeps the two fully
+// isolated. Production deliberately keeps the default `.next` so that
+// `next start` and hosting providers (e.g. Vercel) are unaffected.
+const DEV_DIST_DIR = '.next-dev';
+
+module.exports = (phase) => ({
+  ...nextConfig,
+  distDir: phase === 'phase-development-server' ? DEV_DIST_DIR : '.next',
+});
+

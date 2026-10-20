@@ -12,6 +12,7 @@ export { default as SocialIcon } from './socials/SocialIcon';
 export { default as SocialLink } from './socials/SocialLink';
 export { default as AuthorImage } from './ui/AuthorImage';
 export { default as Cursor } from './ui/Cursor';
+export { default as DotBackground } from './ui/DotBackground';
 export { default as ProjectCard } from './ui/ProjectCard';
 export { default as ProjectDetails } from './ui/ProjectDetails';
 export { default as ProjectModal } from './ui/ProjectModal';

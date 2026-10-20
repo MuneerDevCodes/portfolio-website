@@ -3,8 +3,10 @@ import ThemeProvider from '@/lib/hooks/use-theme';
 import fontVariables from '@/lib/utils/fonts';
 
 import Cursor from '@/components/ui/Cursor';
+import DotBackground from '@/components/ui/DotBackground';
 
 import '../styles/globals.css';
+import '../styles/dot-background.css';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/next';
 import { Metadata } from 'next';
@@ -57,6 +59,7 @@ export default function RootLayout({
         <script src="/scripts/no-flash.js" async />
       </head>
       <body className={`text-text bg-bg ${fontVariables}`}>
+        <DotBackground />
         <Cursor className="hidden dark:lg:block" />
         <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
