@@ -33,6 +33,8 @@ export type ProjectType = {
   tags: string[];
   repo?: string;
   video?: string;
+  description: string;
+  features?: string[];
 };
 
 export interface FeaturedProjectType

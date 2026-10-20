@@ -7,7 +7,12 @@ import { motion, MotionProps } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+interface Props extends ProjectType, MotionProps {
+  onMoreInfo?: (project: ProjectType) => void;
+}
+
 const ProjectCard = ({
+  id,
   name,
   url,
   repo,
@@ -15,8 +20,11 @@ const ProjectCard = ({
   img,
   video,
   tags,
+  description,
+  features,
+  onMoreInfo,
   ...rest
-}: ProjectType & MotionProps) => {
+}: Props) => {
   // To avoid hydration failed error
   const [domLoaded, setDomLoaded] = useState(false);
 
@@ -26,13 +34,13 @@ const ProjectCard = ({
 
   return domLoaded ? (
     <motion.div {...rest} className="w-full max-w-[350px]">
-      <button
+      <div
         onClick={(e) => {
-          // Don't run this if the clicked target is an anchor element
-          if ((e.target as HTMLElement).closest('a')) return;
+          // Don't run this if the clicked target is an anchor or button element
+          if ((e.target as HTMLElement).closest('a, button')) return;
           window.open(url);
         }}
-        className="block w-full overflow-hidden transition-all duration-200 rounded-md shadow-xl group bg-bg-secondary dark:shadow-2xl"
+        className="block w-full overflow-hidden transition-all duration-200 rounded-md shadow-xl cursor-pointer group bg-bg-secondary dark:shadow-2xl"
       >
         <div className="overflow-hidden h-[200px]">
           {video ? (
@@ -78,8 +86,31 @@ const ProjectCard = ({
             <span>{name}</span>
             <span className="mr-1">{year}</span>
           </h4>
+          {onMoreInfo && (
+            <button
+              type="button"
+              onClick={() =>
+                onMoreInfo({
+                  id,
+                  name,
+                  url,
+                  repo,
+                  year,
+                  img,
+                  video,
+                  tags,
+                  description,
+                  features,
+                })
+              }
+              className="inline-flex items-center gap-1 font-mono text-xs capitalize duration-200 cursor-pointer text-accent hover:underline"
+            >
+              <Icon icon="tabler:info-circle" width={14} height={14} />
+              more info
+            </button>
+          )}
         </div>
-      </button>
+      </div>
     </motion.div>
   ) : (
     <></>

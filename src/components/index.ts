@@ -13,6 +13,8 @@ export { default as SocialLink } from './socials/SocialLink';
 export { default as AuthorImage } from './ui/AuthorImage';
 export { default as Cursor } from './ui/Cursor';
 export { default as ProjectCard } from './ui/ProjectCard';
+export { default as ProjectDetails } from './ui/ProjectDetails';
+export { default as ProjectModal } from './ui/ProjectModal';
 // export { default as ShowLottie } from './ui/ShowLottie';
 export { default as Sidebar } from './ui/Sidebar';
 export { default as Wrapper } from './ui/Wrapper';
