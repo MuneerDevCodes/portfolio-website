@@ -1,11 +1,12 @@
 'use client';
+import useShineSweep from '@/lib/hooks/use-shine-sweep';
 import { ProjectType } from '@/lib/types';
 import { blurImageURL } from '@/lib/utils/config';
 
 import { Icon } from '@iconify/react';
 import { motion, MotionProps } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Props extends ProjectType, MotionProps {
   onMoreInfo?: (project: ProjectType) => void;
@@ -25,33 +26,69 @@ const ProjectCard = ({
   onMoreInfo,
   ...rest
 }: Props) => {
-  // To avoid hydration failed error
-  const [domLoaded, setDomLoaded] = useState(false);
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
+  const [showVideoControls, setShowVideoControls] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const shineRef = useRef<HTMLDivElement>(null);
+
+  useShineSweep(shineRef);
 
   useEffect(() => {
-    setDomLoaded(true);
+    const videoElement = videoRef.current;
+    if (!videoElement) return;
+
+    if (!('IntersectionObserver' in window)) {
+      setIsVideoVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        setIsVideoVisible(entry.isIntersecting);
+        if (!entry.isIntersecting) {
+          videoElement.pause();
+          return;
+        }
+
+        videoElement.preload = 'metadata';
+        videoElement.play().catch((error: unknown) => {
+          if (!(error instanceof DOMException && error.name === 'AbortError')) {
+            setShowVideoControls(true);
+          }
+        });
+      },
+      { rootMargin: '200px 0px' }
+    );
+
+    observer.observe(videoElement);
+    return () => observer.disconnect();
   }, []);
 
-  return domLoaded ? (
+  return (
     <motion.div {...rest} className="w-full max-w-[350px]">
       <div
+        ref={shineRef}
         onClick={(e) => {
           // Don't run this if the clicked target is an anchor or button element
-          if ((e.target as HTMLElement).closest('a, button')) return;
+          if ((e.target as HTMLElement).closest('a, button, video[controls]'))
+            return;
           window.open(url);
         }}
-        className="block w-full overflow-hidden transition-all duration-200 rounded-md shadow-xl cursor-pointer group bg-bg-secondary dark:shadow-2xl"
+        className="shine-sweep block w-full overflow-hidden transition-all duration-200 rounded-md shadow-xl cursor-pointer group bg-bg-secondary dark:shadow-2xl"
       >
         <div className="overflow-hidden h-[200px]">
           {video ? (
             <video
+              ref={videoRef}
               src={video}
               poster={img}
-              autoPlay
+              autoPlay={isVideoVisible}
               muted
               loop
               playsInline
-              preload="auto"
+              controls={showVideoControls}
+              preload={isVideoVisible ? 'metadata' : 'none'}
               className="object-cover w-full h-full transition-all duration-300 group-hover:scale-110 group-focus-visible:scale-110"
             />
           ) : (
@@ -60,6 +97,7 @@ const ProjectCard = ({
               alt={name}
               width={300}
               height={300}
+              sizes="(max-width: 350px) 100vw, 350px"
               placeholder="blur"
               blurDataURL={blurImageURL}
               className="object-cover w-full h-full transition-all duration-300 group-hover:scale-110 group-focus-visible:scale-110"
@@ -112,8 +150,6 @@ const ProjectCard = ({
         </div>
       </div>
     </motion.div>
-  ) : (
-    <></>
   );
 };
 
