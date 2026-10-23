@@ -130,6 +130,73 @@
   pointer-events: none;
 }
 
+.hero-particles {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-particles canvas {
+  display: block;
+}
+
+.hero-hologram {
+  background-image: linear-gradient(
+    108deg,
+    currentColor 0%,
+    currentColor 38%,
+    var(--color-accent) 46%,
+    #c5f7ff 50%,
+    var(--color-accent) 54%,
+    currentColor 64%,
+    currentColor 100%
+  );
+  background-position: 100% center;
+  background-size: 240% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(
+    0 0 0.06em color-mix(in srgb, var(--color-accent) 45%, transparent)
+  );
+  animation: hero-hologram-shimmer 9s ease-in-out infinite,
+    hero-hologram-flicker 8s linear infinite;
+}
+
+@keyframes hero-hologram-shimmer {
+  0%,
+  12%,
+  100% {
+    background-position: 100% center;
+  }
+
+  62%,
+  74% {
+    background-position: 0% center;
+  }
+}
+
+@keyframes hero-hologram-flicker {
+  0%,
+  43%,
+  45%,
+  47%,
+  100% {
+    filter: drop-shadow(
+      0 0 0.06em color-mix(in srgb, var(--color-accent) 45%, transparent)
+    );
+  }
+
+  44%,
+  46% {
+    filter: drop-shadow(
+      0 0 0.14em color-mix(in srgb, var(--color-accent) 75%, transparent)
+    );
+  }
+}
+
 .hero-background__grid {
   position: absolute;
   inset: 0;
@@ -199,6 +266,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-hologram {
+    animation: none;
+    background-position: 50% center;
+  }
+
   .hero-background__orb {
     animation: none;
   }
