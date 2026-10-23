@@ -39,7 +39,11 @@ export const toId = (s: string, i?: number) =>
  */
 
 export const sortByYear = (projects: ProjectType[]) => {
-  return projects.sort((a, b) => b.year - a.year);
+  return projects.sort((a, b) => {
+    if (a.year === undefined) return b.year === undefined ? 0 : -1;
+    if (b.year === undefined) return 1;
+    return b.year - a.year;
+  });
 };
 
 /**

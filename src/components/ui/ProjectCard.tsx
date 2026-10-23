@@ -73,9 +73,11 @@ const ProjectCard = ({
           // Don't run this if the clicked target is an anchor or button element
           if ((e.target as HTMLElement).closest('a, button, video[controls]'))
             return;
-          window.open(url);
+          if (url) window.open(url);
         }}
-        className="shine-sweep block w-full overflow-hidden transition-all duration-200 rounded-md shadow-xl cursor-pointer group bg-bg-secondary dark:shadow-2xl"
+        className={`shine-sweep block w-full overflow-hidden transition-all duration-200 rounded-md shadow-xl group bg-bg-secondary dark:shadow-2xl ${
+          url ? 'cursor-pointer' : ''
+        }`}
       >
         <div className="overflow-hidden h-[200px]">
           {video ? (
@@ -115,14 +117,16 @@ const ProjectCard = ({
                   <Icon icon="tabler:brand-github" width={20} height={20} />
                 </a>
               )}
-              <a href={url} className="block" target="_blank">
-                <Icon icon="ci:external-link" width={22} height={22} />
-              </a>
+              {url && (
+                <a href={url} className="block" target="_blank">
+                  <Icon icon="ci:external-link" width={22} height={22} />
+                </a>
+              )}
             </div>
           </div>
           <h4 className="flex justify-between font-medium capitalize duration-200 group-hover:text-accent">
             <span>{name}</span>
-            <span className="mr-1">{year}</span>
+            {year !== undefined && <span className="mr-1">{year}</span>}
           </h4>
           {onMoreInfo && (
             <button

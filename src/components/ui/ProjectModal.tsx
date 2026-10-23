@@ -114,9 +114,11 @@ const ProjectModal = ({ project, onClose }: Props) => {
             <div className="p-5 space-y-4 sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <h3 className="heading-tertiary">{project.name}</h3>
-                <span className="font-mono text-sm text-accent">
-                  {project.year}
-                </span>
+                {project.year !== undefined && (
+                  <span className="font-mono text-sm text-accent">
+                    {project.year}
+                  </span>
+                )}
               </div>
 
               <p className="text-sm leading-6 sm:text-base text-dark-1">
@@ -154,15 +156,17 @@ const ProjectModal = ({ project, onClose }: Props) => {
                     github
                   </a>
                 )}
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 font-mono text-sm capitalize duration-150 text-dark-1 hover:text-accent"
-                >
-                  <Icon icon="ci:external-link" width={18} height={18} />
-                  live site
-                </a>
+                {project.url && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 font-mono text-sm capitalize duration-150 text-dark-1 hover:text-accent"
+                  >
+                    <Icon icon="ci:external-link" width={18} height={18} />
+                    live site
+                  </a>
+                )}
               </div>
 
               <div className="!pt-2">

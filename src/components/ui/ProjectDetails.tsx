@@ -31,7 +31,9 @@ const ProjectDetails = ({ project }: Props) => {
       <motion.div className="max-w-3xl mx-auto">
         <div className="mb-8">
           <p className="mb-2 font-mono text-xs capitalize text-accent">
-            {year} · project details
+            {year !== undefined
+              ? `${year} · project details`
+              : 'project details'}
           </p>
           <h1 className="heading-secondary !mb-0">{name}</h1>
         </div>
@@ -93,9 +95,11 @@ const ProjectDetails = ({ project }: Props) => {
                 github repo
               </Button>
             )}
-            <Button type="link" href={url} size="sm">
-              live site
-            </Button>
+            {url && (
+              <Button type="link" href={url} size="sm">
+                live site
+              </Button>
+            )}
           </div>
         </div>
       </motion.div>

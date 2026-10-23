@@ -4,6 +4,22 @@ import { toId } from '@/lib/utils/helper';
 
 const projects: Omit<ProjectType, 'id'>[] = [
   {
+    name: 'NeoCart',
+    img: 'https://placehold.co/600x400/png?text=NeoCart',
+    tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
+    description:
+      'A responsive e-commerce workflow demo with a searchable catalog, persistent cart and wishlist, simulated checkout, and local order history. Built with Next.js, React, and TypeScript, it uses localStorage and IndexedDB without requiring a backend or account.',
+    features: [
+      'Searchable catalog of 50 products across five categories, with filtering and sorting',
+      'Product details, featured products, category browsing, wishlist, and recently viewed items',
+      'Persistent cart with quantity management and buy-now checkout',
+      'Validated checkout with delivery estimates and optional saved shipping details',
+      'Simulated Cash on Delivery orders with order history, cancellation, and stock restoration',
+      'Responsive layouts with light and dark themes',
+      'Contact page that saves message drafts locally; messages are not transmitted',
+    ],
+  },
+  {
     name: 'Event Management System',
     url: 'https://github.com/MuneerDevCodes',
     img: 'https://placehold.co/600x400/png?text=EventSphere',

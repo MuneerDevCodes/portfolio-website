@@ -27,8 +27,8 @@ export type ExperienceType = {
 export type ProjectType = {
   id: string;
   name: string;
-  url: string;
-  year: number;
+  url?: string;
+  year?: number;
   img: string;
   tags: string[];
   repo?: string;
@@ -38,7 +38,8 @@ export type ProjectType = {
 };
 
 export interface FeaturedProjectType
-  extends Omit<ProjectType, 'year' | 'repo'> {
+  extends Omit<ProjectType, 'year' | 'repo' | 'url'> {
+  url: string;
   description: string;
   repo?: string;
   tasks?: string;
