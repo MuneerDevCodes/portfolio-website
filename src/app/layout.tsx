@@ -40,9 +40,9 @@ export const metadata: Metadata = {
   },
   icons: [
     {
-      rel: 'touch-icon',
+      rel: 'icon',
       type: 'image/x-icon',
-      url: '/favicons/Faviocn96.ico',
+      url: '/favicon.ico',
     },
   ],
 };
