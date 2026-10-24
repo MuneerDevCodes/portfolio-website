@@ -11,51 +11,31 @@
    --dot-spacing         Distance between dots (e.g. 26px)
    --dot-color           Colour of the resting (idle) dots
    --dot-opacity         Opacity of the resting dots (0 - 1)
-   --glow-dot-size       Radius of a glowing (accent) dot
-   --glow-radius         How far from the cursor dots light up, in px
-   --glow-strength       Opacity of the glowing dots (0 - 1) -> intensity
-   --halo-size           Diameter of the soft halo around the cursor, in px
-   --halo-opacity        Opacity of the soft halo (0 - 1)
    --ambient-dot-size    Radius of a glowing dot in the ambient layer
    --ambient-radius      Size of the ambient glow area, in px
    --ambient-opacity     Intensity of the ambient glow (0 - 1)
    --ambient-duration    How long one full drift cycle takes
 
-   NOTE: the animations always run. `prefers-reduced-motion` only softens the
-   effect (slower drift, dimmer ambient, no fades) - it never switches it off.
+   The ambient glow drifts independently of pointer movement. Reduced-motion
+   settings slow and soften that drift.
    ========================================================================== */
 
 :root {
   /* --- Dot grid --- */
   --dot-size: 1.5px;
   --dot-spacing: 26px;
-  --dot-color: #d4d4d8;
+  --dot-color: #5b5b69;
   --dot-opacity: 0.7;
-
-  /* --- Cursor glow --- */
-  --glow-dot-size: 1.9px;
-  --glow-radius: 180px;
-  --glow-strength: 0.9;
-
-  /* --- Soft halo around the cursor --- */
-  --halo-size: 420px;
-  --halo-opacity: 0.6;
-
+  
   /* --- Idle / ambient glow --- */
   --ambient-dot-size: 1.9px;
   --ambient-radius: 340px;
   --ambient-opacity: 0.45;
   --ambient-duration: 18s;
 
-  /* Populated by the script; used by the radial masks. */
-  --mouse-x: 50vw;
-  --mouse-y: 50vh;
+  /* Populated by the script; used by the radial mask. */
   --ambient-x: 50%;
   --ambient-y: 50%;
-
-  /* Runtime opacity multipliers, controlled by the script. */
-  --glow-opacity: 1;
-  --ambient-factor: 0.3;
 }
 
 /* The glow picks up the site accent colour, which already changes between
@@ -80,7 +60,6 @@
 }
 
 .dot-background__dots,
-.dot-background__glow,
 .dot-background__ambient {
   position: absolute;
   inset: 0;
@@ -99,62 +78,6 @@
   opacity: var(--dot-opacity);
 }
 
-/* --- Cursor-following glow ---------------------------------------------- */
-/* The dot pattern is painted in the accent colour and revealed only inside
-   a soft radial mask that follows the cursor. Dots near the cursor therefore
-   brighten and take on the accent colour, then fade out as the cursor moves
-   away (the mask radius is finite and the mask edges are soft). */
-
-.dot-background__glow {
-  background-image: radial-gradient(
-    circle var(--glow-dot-size) at 1px 1px,
-    var(--color-accent, #0ea5e9) 0%,
-    transparent 100%
-  );
-  background-size: var(--dot-spacing) var(--dot-spacing);
-  opacity: calc(var(--glow-strength) * var(--glow-opacity));
-
-  -webkit-mask-image: radial-gradient(
-    circle var(--glow-radius) at var(--mouse-x) var(--mouse-y),
-    #000 0%,
-    rgba(0, 0, 0, 0.55) 45%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    circle var(--glow-radius) at var(--mouse-x) var(--mouse-y),
-    #000 0%,
-    rgba(0, 0, 0, 0.55) 45%,
-    transparent 100%
-  );
-
-  will-change: opacity;
-  transition: opacity 400ms ease-out;
-}
-
-/* --- Soft halo around the cursor ---------------------------------------- */
-/* A single, GPU-composited element that follows the cursor via transform
-   (no repaint of the dot grid). */
-
-.dot-background__halo {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--halo-size);
-  height: var(--halo-size);
-  margin-top: calc(var(--halo-size) / -2);
-  margin-left: calc(var(--halo-size) / -2);
-  border-radius: 50%;
-  background: radial-gradient(
-    circle closest-side,
-    color-mix(in srgb, var(--color-accent, #0ea5e9) 14%, transparent) 0%,
-    transparent 100%
-  );
-  opacity: calc(var(--halo-opacity) * var(--glow-opacity));
-  transform: translate3d(var(--mouse-x), var(--mouse-y), 0);
-  will-change: transform, opacity;
-  transition: opacity 400ms ease-out;
-}
-
 /* --- Slow ambient drift ------------------------------------------------ */
 /* A large radial mask drifts across the grid. Only the MASK moves, so the
    dots stay perfectly aligned with the static grid above at all times. */
@@ -166,7 +89,7 @@
     transparent 100%
   );
   background-size: var(--dot-spacing) var(--dot-spacing);
-  opacity: calc(var(--ambient-opacity) * var(--ambient-factor));
+  opacity: var(--ambient-opacity);
 
   -webkit-mask-image: radial-gradient(
     circle var(--ambient-radius) at var(--ambient-x) var(--ambient-y),
@@ -188,28 +111,13 @@
    ACCESSIBILITY / DEVICE HANDLING
    ========================================================================== */
 
-/* Reduced motion: the effect stays switched ON - it is only softened.
-   The drift slows right down, the glow dims and the fades are dropped. */
+/* Reduced motion slows the ambient drift and dims it. */
 @media (prefers-reduced-motion: reduce) {
   :root {
     --ambient-duration: 36s;
   }
 
-  .dot-background__glow,
-  .dot-background__halo {
-    transition: none;
-  }
-
   .dot-background__ambient {
-    opacity: calc(var(--ambient-opacity) * var(--ambient-factor) * 0.5);
-  }
-}
-
-/* Touch devices: there is no pointer to follow, so the cursor glow and halo
-   are not shown. The ambient drift animation stays at full strength. */
-@media (hover: none), (pointer: coarse) {
-  .dot-background__glow,
-  .dot-background__halo {
-    display: none;
+    opacity: calc(var(--ambient-opacity) * 0.5);
   }
 }

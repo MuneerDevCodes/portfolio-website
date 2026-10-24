@@ -32,12 +32,23 @@ const HeroParticles = () => {
     let pixelRatio = 1;
     let accent = '#0ea5e9';
     let lastTime = 0;
+    let isInViewport = true;
+
+    const shouldAnimate = () =>
+      !motionQuery.matches &&
+      !pointerQuery.matches &&
+      isInViewport &&
+      !document.hidden;
+
+    const scheduleFrame = () => {
+      if (shouldAnimate() && !frame) frame = requestAnimationFrame(draw);
+    };
 
     const resize = () => {
       const bounds = root.getBoundingClientRect();
       width = bounds.width;
       height = bounds.height;
-      pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = Math.round(width * pixelRatio);
       canvas.height = Math.round(height * pixelRatio);
       canvas.style.width = `${width}px`;
@@ -45,8 +56,8 @@ const HeroParticles = () => {
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
       const count = Math.min(
-        76,
-        Math.max(34, Math.round((width * height) / 11500))
+        52,
+        Math.max(24, Math.round((width * height) / 17000))
       );
       particles.length = 0;
       for (let i = 0; i < count; i += 1) {
@@ -81,19 +92,18 @@ const HeroParticles = () => {
     };
 
     const draw = (time: number) => {
+      frame = 0;
       const elapsed = lastTime ? Math.min((time - lastTime) / 16.67, 2) : 1;
       lastTime = time;
-      const reducedMotion = motionQuery.matches;
-      const drift = reducedMotion ? 0.25 : 1;
       context.clearRect(0, 0, width, height);
 
       for (const particle of particles) {
         const targetX =
           particle.originX +
-          Math.sin(time * 0.00035 + particle.phase) * 12 * drift;
+          Math.sin(time * 0.00035 + particle.phase) * 12;
         const targetY =
           particle.originY +
-          Math.cos(time * 0.0003 + particle.phase) * 12 * drift;
+          Math.cos(time * 0.0003 + particle.phase) * 12;
         particle.vx += (targetX - particle.x) * 0.006 * elapsed;
         particle.vy += (targetY - particle.y) * 0.006 * elapsed;
 
@@ -119,11 +129,11 @@ const HeroParticles = () => {
         const particle = particles[i];
         for (let j = i + 1; j < particles.length; j += 1) {
           const other = particles[j];
-          const distance = Math.hypot(
-            particle.x - other.x,
-            particle.y - other.y
-          );
-          if (distance < 145) {
+          const dx = particle.x - other.x;
+          const dy = particle.y - other.y;
+          const distanceSquared = dx * dx + dy * dy;
+          if (distanceSquared < 145 * 145) {
+            const distance = Math.sqrt(distanceSquared);
             context.globalAlpha = (1 - distance / 145) * 0.32;
             context.strokeStyle = accent;
             context.lineWidth = 0.8;
@@ -144,24 +154,54 @@ const HeroParticles = () => {
       }
 
       context.globalAlpha = 1;
-      frame = requestAnimationFrame(draw);
+      scheduleFrame();
     };
 
+    const updateAnimation = () => {
+      if (shouldAnimate()) {
+        scheduleFrame();
+      } else if (frame) {
+        cancelAnimationFrame(frame);
+        frame = 0;
+      }
+      if (!shouldAnimate()) draw(performance.now());
+    };
+
+    const onVisibilityChange = () => updateAnimation();
     accent =
       getComputedStyle(root).getPropertyValue('--color-accent').trim() ||
       accent;
     resize();
-    frame = requestAnimationFrame(draw);
+    draw(performance.now());
+    motionQuery.addEventListener('change', updateAnimation);
+    pointerQuery.addEventListener('change', updateAnimation);
+    document.addEventListener('visibilitychange', onVisibilityChange);
     window.addEventListener('pointermove', onPointerMove, { passive: true });
     window.addEventListener('pointerout', onPointerLeave);
-    const resizeObserver = new ResizeObserver(resize);
+    const resizeObserver = new ResizeObserver(() => {
+      resize();
+      if (shouldAnimate()) {
+        scheduleFrame();
+      } else {
+        draw(performance.now());
+      }
+    });
     resizeObserver.observe(root);
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      isInViewport = entry?.isIntersecting ?? false;
+      updateAnimation();
+    });
+    intersectionObserver.observe(root);
 
     return () => {
       cancelAnimationFrame(frame);
+      motionQuery.removeEventListener('change', updateAnimation);
+      pointerQuery.removeEventListener('change', updateAnimation);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerout', onPointerLeave);
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
     };
   }, []);
 

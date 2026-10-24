@@ -6,6 +6,7 @@ import { Icon } from '@iconify/react';
 import { motion, MotionProps } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 
 interface Props extends FeaturedProjectType, MotionProps {
   align?: 'left' | 'right';
@@ -13,6 +14,7 @@ interface Props extends FeaturedProjectType, MotionProps {
 
 const FeaturedProject = ({
   img,
+  video,
   name,
   url,
   repo,
@@ -22,6 +24,54 @@ const FeaturedProject = ({
   align = 'left',
   ...rest
 }: Props) => {
+  const desktopVideoRef = useRef<HTMLVideoElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
+  const [autoplayFailed, setAutoplayFailed] = useState(false);
+
+  useEffect(() => {
+    const videos = [desktopVideoRef.current, mobileVideoRef.current].filter(
+      (element): element is HTMLVideoElement => element !== null
+    );
+
+    if (videos.length === 0) return;
+
+    const playVideo = (element: HTMLVideoElement) => {
+      element.muted = true;
+      element.play().catch((error: unknown) => {
+        if (!(error instanceof DOMException && error.name === 'AbortError')) {
+          setAutoplayFailed(true);
+        }
+      });
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      videos.forEach(playVideo);
+      return () => videos.forEach((element) => element.pause());
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!(entry.target instanceof HTMLVideoElement)) return;
+
+          if (entry.isIntersecting) {
+            playVideo(entry.target);
+          } else {
+            entry.target.pause();
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    videos.forEach((element) => observer.observe(element));
+
+    return () => {
+      observer.disconnect();
+      videos.forEach((element) => element.pause());
+    };
+  }, [video]);
+
   return (
     <>
       <motion.div
@@ -37,20 +87,46 @@ const FeaturedProject = ({
             align === 'left' && 'ml-auto'
           )}
         >
-          <Image
-            src={img}
-            alt={name}
-            width={720}
-            height={480}
-            className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-105"
-            placeholder="blur"
-            blurDataURL={blurImageURL}
-          />
-          <Link
-            href={`${url}`}
-            target="_blank"
-            className="absolute inset-0 z-10 block bg-transparent"
-          />
+          {video ? (
+            <>
+              <video
+                ref={desktopVideoRef}
+                src={video}
+                poster={img}
+                controls
+                muted
+                playsInline
+                preload="metadata"
+                aria-label={`${name} project video`}
+                className="object-cover w-full h-full"
+              />
+              {autoplayFailed && (
+                <p
+                  role="status"
+                  className="absolute inset-x-3 bottom-3 z-20 rounded bg-black/70 p-2 text-center text-xs text-white"
+                >
+                  Autoplay unavailable. Press play to watch.
+                </p>
+              )}
+            </>
+          ) : (
+            <>
+              <Image
+                src={img}
+                alt={name}
+                width={720}
+                height={480}
+                className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-105"
+                placeholder="blur"
+                blurDataURL={blurImageURL}
+              />
+              <Link
+                href={url}
+                target="_blank"
+                className="absolute inset-0 z-10 block bg-transparent"
+              />
+            </>
+          )}
         </div>
         <div
           className={cn(
@@ -127,21 +203,47 @@ const FeaturedProject = ({
         {...rest}
       >
         {/* Image Header */}
-        <header className={cn('w-full')}>
-          <Image
-            src={img}
-            alt={name}
-            width={720}
-            height={480}
-            className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-105"
-            placeholder="blur"
-            blurDataURL={blurImageURL}
-          />
-          <Link
-            href={`${url}`}
-            target="_blank"
-            className="absolute inset-0 z-10 block bg-transparent"
-          />
+        <header className={cn('relative w-full')}>
+          {video ? (
+            <>
+              <video
+                ref={mobileVideoRef}
+                src={video}
+                poster={img}
+                controls
+                muted
+                playsInline
+                preload="metadata"
+                aria-label={`${name} project video`}
+                className="object-cover w-full h-full"
+              />
+              {autoplayFailed && (
+                <p
+                  role="status"
+                  className="absolute inset-x-3 bottom-3 z-20 rounded bg-black/70 p-2 text-center text-xs text-white"
+                >
+                  Autoplay unavailable. Press play to watch.
+                </p>
+              )}
+            </>
+          ) : (
+            <>
+              <Image
+                src={img}
+                alt={name}
+                width={720}
+                height={480}
+                className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-105"
+                placeholder="blur"
+                blurDataURL={blurImageURL}
+              />
+              <Link
+                href={url}
+                target="_blank"
+                className="absolute inset-0 z-10 block bg-transparent"
+              />
+            </>
+          )}
         </header>
 
         <div className={cn('bg-bg-secondary p-5 space-y-2')}>

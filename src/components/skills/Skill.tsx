@@ -49,7 +49,7 @@ const Skill = ({
       {/* Right */}
       <DynamicShowLottie
         path={lottie}
-        className="md:min-h-[448px] md:min-w-[448px]"
+        className="min-h-[300px] md:min-h-[448px] md:min-w-[448px]"
       />
     </motion.div>
   );

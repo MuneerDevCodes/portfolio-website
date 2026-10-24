@@ -2,7 +2,6 @@ import { seoData } from '@/lib/content/portfolio';
 import ThemeProvider from '@/lib/hooks/use-theme';
 import fontVariables from '@/lib/utils/fonts';
 
-import Cursor from '@/components/ui/Cursor';
 import DotBackground from '@/components/ui/DotBackground';
 
 import '../styles/globals.css';
@@ -60,7 +59,6 @@ export default function RootLayout({
       </head>
       <body className={`text-text bg-bg ${fontVariables}`}>
         <DotBackground />
-        <Cursor className="hidden dark:lg:block" />
         <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
         {process.env.NEXT_PUBLIC_GA_ID && (
