@@ -56,8 +56,8 @@ const HeroParticles = () => {
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
       const count = Math.min(
-        52,
-        Math.max(24, Math.round((width * height) / 17000))
+        150,
+        Math.max(700, Math.round((width * height) / 1000000))
       );
       particles.length = 0;
       for (let i = 0; i < count; i += 1) {

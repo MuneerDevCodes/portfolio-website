@@ -21,6 +21,7 @@ const skills: Omit<SkillType, 'id'>[] = [
       { name: 'javaScript', icon: 'vscode-icons:file-type-js-official' },
       { name: 'bootstrap', icon: 'logos:bootstrap' },
       { name: 'reactjs', icon: 'logos:react' },
+      { name: 'Next.js', icon: 'logos:nextjs-icon' },
       { name: 'nodejs', icon: 'logos:nodejs-icon' },
       { name: 'expressjs', icon: 'simple-icons:express' },
       { name: 'laravel', icon: 'logos:laravel' },
@@ -29,6 +30,11 @@ const skills: Omit<SkillType, 'id'>[] = [
       { name: 'MongoDB', icon: 'logos:mongodb-icon' },
       { name: 'mysql', icon: 'logos:mysql' },
       { name: 'postgresql', icon: 'logos:postgresql' },
+      { name: 'Office Automation', icon: 'simple-icons:microsoftoffice' },
+      { name: 'Email Marketing', icon: 'mdi:email-newsletter' }
+      
+     
+      
     ],
   },
   {
@@ -45,8 +51,7 @@ const skills: Omit<SkillType, 'id'>[] = [
     softwareSkills: [
       { name: 'wordpress', icon: 'logos:wordpress-icon' },
       { name: 'shopify', icon: 'logos:shopify' },
-      { name: 'git', icon: 'logos:git-icon' },
-      { name: 'github', icon: 'logos:github-icon' },
+      
     ],
   },
 ];

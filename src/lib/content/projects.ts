@@ -5,7 +5,7 @@ import { toId } from '@/lib/utils/helper';
 const projects: Omit<ProjectType, 'id'>[] = [
   {
     name: 'NeoCart',
-     url: 'https://github.com/MuneerDevCodes',
+     url: 'https://neocartnextjs.vercel.app/',
     img: 'https://placehold.co/600x400/png?text=NeoCart',
     video: '/Projectvideos/NeoCart.mp4',
     tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
@@ -41,7 +41,7 @@ const projects: Omit<ProjectType, 'id'>[] = [
   },
   {
     name: 'orthocare Dentist',
-    url: 'https://orthocare-dentist.vercel.app',
+    url: 'https://orthocare-sigma.vercel.app/',
     img: 'https://placehold.co/600x400/png?text=OrthoCare',
     video: '/Projectvideos/OralCare.mp4',
     
