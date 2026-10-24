@@ -38,10 +38,7 @@ export interface AboutSectionType extends Section {
 export type SkillType = {
   id: string;
   title: string;
-  lottie: {
-    light: string;
-    dark: string;
-  };
+  wide?: boolean;
   points: string[];
   softwareSkills: SoftwareSkillType[];
 };

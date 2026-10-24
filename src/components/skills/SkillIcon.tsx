@@ -7,20 +7,13 @@ type Props = {
 
 const SkillIcon = ({ src, name }: Props) => {
   return (
-    <div className="relative grid text-2xl rounded-full shadow-md bg-bg-secondary dark:shadow-xl h-14 w-14 sm:h-16 sm:w-16 place-items-center group">
-      <Icon icon={src} width="32" height="32" />
-      <div className="absolute invisible px-2 py-1 text-sm text-white capitalize duration-200 rounded opacity-0 w-max group-hover:opacity-100 group-hover:visible -top-8 bg-slate-900/75 dark:bg-slate-700/90 dark:text-slate-100">
+    <div className="group/technology flex min-w-0 items-center gap-3 border-b border-dark-3/35 py-3 transition-colors duration-200 motion-reduce:transition-none hover:border-accent/50">
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-dark-3/40 bg-bg text-dark-2 transition duration-200 motion-reduce:transition-none group-hover/technology:border-accent/40 group-hover/technology:text-accent">
+        <Icon aria-hidden="true" icon={src} width="20" height="20" />
+      </span>
+      <span className="min-w-0 truncate text-sm font-medium capitalize text-dark-2 transition-colors motion-reduce:transition-none group-hover/technology:text-accent sm:text-base">
         {name}
-        <svg
-          className="absolute left-0 w-full h-2 text-slate-900/75 dark:text-slate-700/90 top-full"
-          x="0px"
-          y="0px"
-          viewBox="0 0 255 255"
-          xmlSpace="preserve"
-        >
-          <polygon className="fill-current" points="0,0 127.5,127.5 255,0" />
-        </svg>
-      </div>
+      </span>
     </div>
   );
 };
