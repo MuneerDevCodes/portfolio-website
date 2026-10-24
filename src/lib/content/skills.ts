@@ -57,6 +57,6 @@ const skills: Omit<SkillType, 'id'>[] = [
 ];
 
 export const skillsSection: SkillsSectionType = {
-  title: 'what i do',
+  title: 'T E C H N I C A L - S K I L L S',
   skills: skills.map((skill, i) => ({ ...skill, id: toId(skill.title, i) })),
 };
